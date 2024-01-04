@@ -35,3 +35,6 @@ build/
 
 *.jar
 *.mvn
+data/testdb.mv.db
+
+data/testdb.trace.db
