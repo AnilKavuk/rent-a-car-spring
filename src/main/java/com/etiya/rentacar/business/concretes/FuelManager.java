@@ -4,6 +4,7 @@ import com.etiya.rentacar.business.abstracts.FuelService;
 import com.etiya.rentacar.business.dtos.requests.CreateFuelRequest;
 import com.etiya.rentacar.business.dtos.responses.CreatedFuelResponse;
 import com.etiya.rentacar.business.dtos.responses.GetAllFuelResponse;
+import com.etiya.rentacar.business.rules.FuelBusinessRules;
 import com.etiya.rentacar.core.utilities.mapping.ModelMapperService;
 import com.etiya.rentacar.dataAccess.abstracts.FuelRepository;
 import com.etiya.rentacar.entities.concretes.Fuel;
@@ -19,9 +20,10 @@ import java.util.stream.Collectors;
 public class FuelManager implements FuelService {
     private FuelRepository fuelRepository;
     private ModelMapperService modelMapperService;
-
+    private FuelBusinessRules fuelBusinessRules;
     @Override
     public CreatedFuelResponse add(CreateFuelRequest createFuelRequest) {
+        fuelBusinessRules.FuelNameCanNotBeDuplicated(createFuelRequest.getName());
         Fuel fuel=this.modelMapperService.forRequest().map(createFuelRequest,Fuel.class);
 
         fuel.setCreatedDate(LocalDateTime.now());

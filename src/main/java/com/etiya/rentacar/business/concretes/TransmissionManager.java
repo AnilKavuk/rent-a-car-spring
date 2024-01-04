@@ -4,6 +4,7 @@ import com.etiya.rentacar.business.abstracts.TransmissionService;
 import com.etiya.rentacar.business.dtos.requests.CreateTransmissionRequest;
 import com.etiya.rentacar.business.dtos.responses.CreatedTransmissionResponse;
 import com.etiya.rentacar.business.dtos.responses.GetAllTransmissionResponse;
+import com.etiya.rentacar.business.rules.TransmissionBusinessRules;
 import com.etiya.rentacar.core.utilities.mapping.ModelMapperService;
 import com.etiya.rentacar.dataAccess.abstracts.TransmissionRepository;
 import com.etiya.rentacar.entities.concretes.Transmission;
@@ -19,8 +20,10 @@ import java.util.stream.Collectors;
 public class TransmissionManager implements TransmissionService {
     private TransmissionRepository transmissionRepository;
     private ModelMapperService modelMapperService;
+    private TransmissionBusinessRules transmissionBusinessRules;
     @Override
     public CreatedTransmissionResponse add(CreateTransmissionRequest createTransmissionRequest) {
+        transmissionBusinessRules.TransmissionNameCanNotBeDuplicated(createTransmissionRequest.getName());
         Transmission transmission=this.modelMapperService.forRequest().map(createTransmissionRequest,Transmission.class);
 
         transmission.setCreatedDate(LocalDateTime.now());

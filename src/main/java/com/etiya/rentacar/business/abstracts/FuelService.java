@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface FuelService {
     CreatedFuelResponse add(CreateFuelRequest createFuelRequest);
-    
+
     List<GetAllFuelResponse> getAll();
 }
