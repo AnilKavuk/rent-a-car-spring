@@ -42,4 +42,14 @@ public class CarManager implements CarService {
 
         return response;
     }
+
+    @Override
+    public boolean stateCar(String carId) {
+        var car=carRepository.getById(Integer.parseInt(carId));
+        if(car.getState()==1){
+            return true;
+        }
+        return false;
+    }
+
 }

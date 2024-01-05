@@ -10,4 +10,6 @@ public interface CarService {
     CreatedCarResponse add(CreateCarRequest createCarRequest);
 
     List<GetAllCarResponse> getAll();
+
+    boolean stateCar(String carId);
 }
