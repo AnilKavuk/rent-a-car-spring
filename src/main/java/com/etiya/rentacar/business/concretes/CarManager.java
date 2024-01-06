@@ -44,12 +44,21 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public boolean stateCar(String carId) {
+    public Car setStateCar(String carId) {
         var car=carRepository.getById(Integer.parseInt(carId));
         if(car.getState()==1){
-            return true;
-        }
-        return false;
+            car.setState(3);
+            car.setUpdatedDate(LocalDateTime.now());
+            carRepository.save(car);
+            return car;
+            }
+            return null;
     }
+
+    @Override
+    public Car getStateCar(String carId) {
+        return carRepository.getById(Integer.parseInt(carId));
+    }
+
 
 }

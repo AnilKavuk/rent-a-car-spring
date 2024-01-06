@@ -1,5 +1,6 @@
 package com.etiya.rentacar.business.concretes;
 
+import com.etiya.rentacar.business.abstracts.CarService;
 import com.etiya.rentacar.business.abstracts.MaintenanceService;
 import com.etiya.rentacar.business.dtos.requests.CreateMaintenanceRequest;
 import com.etiya.rentacar.business.dtos.responses.CreatedMaintenanceResponse;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 public class MaintenanceManager implements MaintenanceService {
     private MaintenanceRepository maintenanceRepository;
     private ModelMapperService modelMapperService;
-    private CarRepository carRepository;
+    private CarService carService;
     private MaintenanceBusinessRules availableBusinessRules;
     @Override
     public CreatedMaintenanceResponse add(CreateMaintenanceRequest createMaintenanceRequest) {
@@ -28,12 +29,7 @@ public class MaintenanceManager implements MaintenanceService {
         maintenance.setCreatedDate(LocalDateTime.now());
         maintenance.setDateSent(LocalDateTime.now());
 
-        Car car = carRepository.getById( Integer.parseInt(createMaintenanceRequest.getCarId()));
-
-        // car state
-        car.setState(3);
-
-        carRepository.save(car);
+        Car car = carService.setStateCar(createMaintenanceRequest.getCarId());
 
         Maintenance createdMaintenance=maintenanceRepository.save(maintenance);
 
